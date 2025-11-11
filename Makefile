@@ -9,7 +9,7 @@ OBJ = otherCommands.o mkdirSplitpath.o
 	$(CC) -c -o $@ $< $(CFLAGS)
 
 main: main.c $(OBJ)
-	$(CC) -o $@ $^ $(CFLAGS)
+	$(CC) -g -o $@ $^ $(CFLAGS)
 
 .PHONY: clean
 
