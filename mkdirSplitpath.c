@@ -25,6 +25,7 @@ void mkdir(char pathName[]){
    struct NODE* parentDir = splitPath(pathName, baseName, dirName);
 
    // printf("%s  %s\n", dirName, baseName);
+   printf("%s\n", parentDir->name);
    
    if ( parentDir->childPtr == NULL ) {
       // Create as child of parentDir
@@ -34,18 +35,20 @@ void mkdir(char pathName[]){
       finalDir->siblingPtr = NULL;
       strcpy(finalDir->name, baseName);
       finalDir->fileType = 'd';
+      parentDir->childPtr = finalDir;
       return; // All done!
    }
+
    // Otherwise, there are other inodes in this directory and we need to get to
    // the end of the directory to then add a file.
    struct NODE* candidateInode = parentDir->childPtr;
-   while ( strcmp(candidateInode->name, baseName) &&
-           candidateInode->siblingPtr != NULL ) {
+   while ( strcmp(candidateInode->name, baseName) == 0 &&
+           candidateInode->siblingPtr != NULL            ) {
       candidateInode = candidateInode->siblingPtr;
    }
    // Now we are at the thing we need to make, let's check that it doesn't exist
    // yet.
-   if ( strcmp(candidateInode->name, baseName) ) {
+   if ( strcmp(candidateInode->name, baseName) == 0 ) {
       printf("mkdir: cannot create directory '%s': File exists\n",
             pathName);
       return;
