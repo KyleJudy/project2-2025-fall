@@ -39,16 +39,14 @@ void mkdir(char pathName[]){
    // Otherwise, there are other inodes in this directory and we need to get to
    // the end of the directory to then add a file.
    struct NODE* candidateInode = parentDir->childPtr;
-   while ( strcmp(candidateInode->name, baseName) == 0 &&
-           candidateInode->siblingPtr != NULL            ) {
+   while ( candidateInode->siblingPtr != NULL ) {
+      // If inode we are attempting to make exists, quit.
+      if ( strcmp(candidateInode->name, baseName) == 0 ) {
+         printf("MKDIR ERROR: directory %s already exists\n",
+               pathName);
+         return;
+      }
       candidateInode = candidateInode->siblingPtr;
-   }
-   // Now we are at the thing we need to make, let's check that it doesn't exist
-   // yet.
-   if ( strcmp(candidateInode->name, baseName) == 0 ) {
-      printf("mkdir: cannot create directory '%s': File exists\n",
-            pathName);
-      return;
    }
 
    // Okay, it doesn't exist, and we are at the sibling that we need to make a
