@@ -20,9 +20,6 @@ void mkdir(char pathName[]){
    strcpy(dirName, "");
    struct NODE* parentDir = splitPath(pathName, baseName, dirName);
 
-   // printf("%s  %s\n", dirName, baseName);
-   printf("%s\n", parentDir->name);
-
    if ( parentDir->childPtr == NULL ) {
       // Create as child of parentDir
       struct NODE* finalDir = (struct NODE*) malloc(sizeof(struct NODE));
@@ -32,6 +29,7 @@ void mkdir(char pathName[]){
       strcpy(finalDir->name, baseName);
       finalDir->fileType = 'd';
       parentDir->childPtr = finalDir;
+      printf("MKDIR SUCCESS: node %s successfully created\n", pathName);
       return; // All done!
    }
 
@@ -58,8 +56,7 @@ void mkdir(char pathName[]){
    strcpy(finalDir->name, baseName);
    finalDir->fileType = 'd';
    candidateInode->siblingPtr = finalDir;
-   printf("Here! candidateInode->siblingPtr->name: %s\n", 
-         candidateInode->siblingPtr->name);
+   printf("MKDIR SUCCESS: node %s successfully created\n", pathName);
    return; // All done!
 }
 
