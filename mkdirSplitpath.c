@@ -14,10 +14,6 @@ struct NODE* endOfDir(struct NODE* startOfDir) {
 //make directory
 void mkdir(char pathName[]){
 
-   // TO BE IMPLEMENTED
-   //
-   // YOUR CODE TO REPLACE THE PRINTF FUNCTION BELOW
-
    char* baseName = (char*) malloc(64);
    char* dirName = (char*) malloc(64*63);
    strcpy(baseName, "");
@@ -26,7 +22,7 @@ void mkdir(char pathName[]){
 
    // printf("%s  %s\n", dirName, baseName);
    printf("%s\n", parentDir->name);
-   
+
    if ( parentDir->childPtr == NULL ) {
       // Create as child of parentDir
       struct NODE* finalDir = (struct NODE*) malloc(sizeof(struct NODE));
@@ -38,6 +34,7 @@ void mkdir(char pathName[]){
       parentDir->childPtr = finalDir;
       return; // All done!
    }
+
 
    // Otherwise, there are other inodes in this directory and we need to get to
    // the end of the directory to then add a file.
@@ -56,78 +53,16 @@ void mkdir(char pathName[]){
 
    // Okay, it doesn't exist, and we are at the sibling that we need to make a
    // child of.
-
-   return;
-
-   size_t scanloc = 0;
-
-   if ( pathName[0] == '/' ) {
-      // Do root calculation scanloc++;
-   }
-   // Do relative calculation
-   char *directPathName[64];
-   for ( int i = 0; i < 64; i++ ) {
-      directPathName[i] = (char*) malloc(64);
-   }
-   size_t depth0 = 0;
-   size_t depth1 = 0;
-   while ( pathName[scanloc] != '\0' ) { // Scan until end of string
-      while ( pathName[scanloc] != '/' && pathName[scanloc] != '\0' ) {
-         directPathName[depth0][depth1] = pathName[scanloc];
-         scanloc++;
-         depth1++;
-      }
-      printf("Path: %s\n", directPathName[depth0]);
-      depth1 = 0;
-      depth0++;
-      scanloc++;
-   }
-
-   // Now we have the path, let's make our directory!
-   struct NODE* start = cwd;
-   if ( pathName[0] == '/' ) {
-      start = root;
-   }
-
-
-   size_t depth2 = depth0;
-   depth0 = 0;
-   printf("depth2: %d\n", depth2);
-
-   // I'm not quite sure if I should emulate -p behavior or not, I'm going to
-   // assume not.
-   while ( depth0 < depth2 - 1 ) { // Use -1 because that is the pointer we want
-                                   // that is just before where we exit
-      while ( start->siblingPtr != NULL            // While there is a sibling
-           && start->name != directPathName[depth0]// and we aren't at the node
-                                                   // we want
-            ) {
-         start = start->siblingPtr; // Change start to another candidate pointer
-                                    // in this level of the filesystem
-      }
-      depth0++;
-   }
-   // Now we are at the node we wish to create a child of, let's start work on
-   // making that child!
-   
-   //struct NODE* finaldir;
-   struct NODE* finaldir = (struct NODE*) malloc(sizeof(struct NODE));
-   finaldir->parentPtr = start;
-   finaldir->siblingPtr = NULL;
-   finaldir->fileType = 'd';
-   finaldir->childPtr = NULL;
-   strcpy(finaldir->name, directPathName[depth2]);
-   if ( start->childPtr != NULL ) { // If there are other inodes in directory
-                                    // that is parent of requested dir to create
-      start = endOfDir(start->childPtr);
-      start->siblingPtr = finaldir;
-   } else {
-      start->childPtr = finaldir;
-   }
-
-   free(finaldir);
-
-   return;
+   struct NODE* finalDir = (struct NODE*) malloc(sizeof(struct NODE));
+   finalDir->parentPtr = parentDir;
+   finalDir->childPtr = NULL;
+   finalDir->siblingPtr = NULL;
+   strcpy(finalDir->name, baseName);
+   finalDir->fileType = 'd';
+   candidateInode->siblingPtr = finalDir;
+   printf("Here! candidateInode->siblingPtr->name: %s\n", 
+         candidateInode->siblingPtr->name);
+   return; // All done!
 }
 
 // Helper function to split a path string by '/'
