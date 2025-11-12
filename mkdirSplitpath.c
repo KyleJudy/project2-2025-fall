@@ -27,7 +27,7 @@ void mkdir(char pathName[]){
       finalDir->childPtr = NULL;
       finalDir->siblingPtr = NULL;
       strcpy(finalDir->name, baseName);
-      finalDir->fileType = 'd';
+      finalDir->fileType = 'D';
       parentDir->childPtr = finalDir;
       printf("MKDIR SUCCESS: node %s successfully created\n", pathName);
       return; // All done!
@@ -54,7 +54,7 @@ void mkdir(char pathName[]){
    finalDir->childPtr = NULL;
    finalDir->siblingPtr = NULL;
    strcpy(finalDir->name, baseName);
-   finalDir->fileType = 'd';
+   finalDir->fileType = 'D';
    candidateInode->siblingPtr = finalDir;
    printf("MKDIR SUCCESS: node %s successfully created\n", pathName);
    return; // All done!
