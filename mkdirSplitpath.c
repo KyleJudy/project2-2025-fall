@@ -49,12 +49,6 @@ void mkdir(char pathName[]){
    struct NODE* candidateInode = parentDir->childPtr;
    while ( candidateInode->siblingPtr != NULL &&
            strcmp(candidateInode->name, baseName) != 0 ) {
-      /* // If inode we are attempting to make exists, quit.
-      if ( strcmp(candidateInode->name, baseName) == 0 ) {
-         printf("MKDIR ERROR: directory %s already exists\n",
-               pathName);
-         return;
-      } */
       candidateInode = candidateInode->siblingPtr;
    }
    if ( candidateInode->siblingPtr != NULL ||
@@ -204,17 +198,6 @@ struct NODE* splitPath(char* pathName, char* baseName, char* dirName) {
       }
    }
 
-
-   /* if ( strcmp(node->name, tokens[tokenCount - 1]) == 0 ) {
-      // Directory already exists, quit.
-      printf("MKDIR ERROR: directory %s already exists\n",
-         pathName);
-      for ( int i = 0; i < 64; i++ ) {
-         free(tokens[i]);
-      }
-      free(tokens);
-      return NULL;
-   } */
 
    // Clean up
    for ( int i = 0; i < 64; i++ ) {
