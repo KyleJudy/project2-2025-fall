@@ -3,7 +3,7 @@
 struct NODE *root;
 struct NODE *cwd;
 char *cmd[] = {"mkdir", "rmdir", "ls", "cd", "pwd", "touch", "rm",
- "menu", "tree", "quit", NULL};
+ "menu", "tree", "quit", "exit", NULL};
 
 /*
 Uses the user's input to determine what command will be used
@@ -64,6 +64,7 @@ int main(){
             case 7: menu(); break;
             case 8: printTree(); break;
             case 9: return quit();
+            case 10: return quit();
             default: printf("invalid command %s\n", command);
         }
     }
